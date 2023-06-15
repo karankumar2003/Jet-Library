@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.jetlibrary.screens.details.DetailsScreen
 import com.example.jetlibrary.screens.home.HomeScreen
+import com.example.jetlibrary.screens.login.CreateAccountScreen
 import com.example.jetlibrary.screens.login.LogInScreen
 import com.example.jetlibrary.screens.search.SearchScreen
 import com.example.jetlibrary.screens.splash.SplashScreen
@@ -36,6 +37,10 @@ fun LibraryNavigation() {
         composable(LibraryScreens.SearchScreen.name){
 
             SearchScreen(navController)
+        }
+        composable(LibraryScreens.CreateAccountScreen.name){
+
+            CreateAccountScreen(navController)
         }
 
 

@@ -7,5 +7,6 @@ enum class LibraryScreens {
     SearchScreen,
     StatsScreen,
     UpdateScreen,
-    SplashScreen
+    SplashScreen,
+    CreateAccountScreen
 }

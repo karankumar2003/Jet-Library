@@ -15,10 +15,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.jetlibrary.components.UserForm
-import com.example.jetlibrary.navigation.LibraryScreens
 
 @Composable
-fun LogInScreen(navController: NavHostController) {
+fun CreateAccountScreen(navController: NavHostController) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -34,14 +33,14 @@ fun LogInScreen(navController: NavHostController) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp),
-            buttonText = "Sign In",
             onButtonClick = { email, password ->
-                Toast.makeText(context, "Signed In", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Account Created", Toast.LENGTH_SHORT).show()
             },
-            newUserText = "Don't have an account? ",
-            signUpText = "Sign Up",
+            buttonText = "Create Account",
+            newUserText = "Already have an account? ",
+            signUpText = "Sign In",
             signUpTextOnClick = {
-                navController.navigate(LibraryScreens.CreateAccountScreen.name)
+                navController.navigateUp()
             }
         )
     }
