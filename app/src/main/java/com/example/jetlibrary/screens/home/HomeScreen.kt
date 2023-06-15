@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -50,17 +53,48 @@ fun HomeScreen(navController: NavHostController) {
             }
         }
     ) {
-        Column(modifier = Modifier
-            .padding(it)
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .fillMaxSize()
+                .padding(10.dp)
+                .verticalScroll(rememberScrollState())
         ) {
-            Text("Your reading activity",modifier =Modifier, fontSize = 25.sp)
             Spacer(modifier = Modifier.height(20.dp))
-            BookCard(book = MBook(),
-                modifier=Modifier.size(180.dp,250.dp)
-                )
+            Text("Your reading activity", modifier = Modifier, fontSize = 25.sp)
+            Spacer(modifier = Modifier.height(20.dp))
+
+            BookCard(
+                book = MBook(),
+                modifier = Modifier.size(180.dp, 250.dp)
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+            Text("Reading List", modifier = Modifier, fontSize = 25.sp)
+            Spacer(modifier = Modifier.height(20.dp))
+
+            ReadingListSection(bookList = listOf(
+                MBook(null, "Android", "Karan", null),
+                MBook(null, "Kotlin", "Karan", null),
+                MBook(null, "Java", "Karan", null),
+                MBook(null, "Jetpack Compose", "Karan", null),
+                MBook(null, "Dependency Injection", "Karan", null),
+                MBook(null, "Artificial Intelligence", "Karan", null),
+            ))
         }
 
+    }
+}
+
+@Composable
+fun ReadingListSection(
+    modifier: Modifier = Modifier,
+    bookList:List<MBook>
+) {
+    LazyRow(modifier = modifier){
+        items(bookList){
+            BookCard(book = it, modifier = Modifier.size(180.dp, 250.dp))
+            Spacer(modifier = Modifier.width(5.dp))
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.jetlibrary.screens.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,11 +33,15 @@ import com.example.jetlibrary.model.MBook
 fun BookCard(
     book: MBook,
     modifier: Modifier = Modifier,
-    buttonLabel:String = "Reading",
-    buttonOnClick : () -> Unit = {}
+    readingStatus:String = "Reading",
+    cardOnClick: () -> Unit = {},
+    onReadingStatusClick : () -> Unit = {}
 ) {
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .clickable {
+                       cardOnClick()
+            },
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
 
@@ -85,12 +90,11 @@ fun BookCard(
             )
             Text(text = book.author.toString(), maxLines = 2, overflow = TextOverflow.Ellipsis)
 
-            Button(
-                onClick = buttonOnClick ,
-                modifier = Modifier.align(Alignment.End)
-            ) {
-                Text(buttonLabel)
-            }
+
+                Text(readingStatus,modifier.clickable {
+                    onReadingStatusClick()
+                })
+
         }
     }
 }
