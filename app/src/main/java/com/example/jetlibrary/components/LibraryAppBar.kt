@@ -31,11 +31,22 @@ fun LibraryAppBar(
         modifier = modifier,
         navigationIcon = {
             if (isHomeScreen) {
-                Icon(Icons.Default.AccountCircle, "Logo")
+                IconButton(
+                    onClick = {
+                        navController.navigate(LibraryScreens.StatsScreen.name)
+                    }
+                ) {
+                    Icon(Icons.Default.AccountCircle, contentDescription = "Account")
+                }
             } else {
-                Icon(Icons.Default.ArrowBack, "Navigate Back", modifier.clickable {
-                    navController.navigateUp()
-                })
+                IconButton(
+                    onClick = {
+                        navController.navigateUp()
+                    }
+                ) {
+                    Icon(Icons.Default.ArrowBack, contentDescription = "Navigate Back")
+                }
+
             }
         },
         actions = {
@@ -59,14 +70,6 @@ fun LibraryAppBar(
                 }
 
             }else{
-                IconButton(
-                    onClick = {
-                       navController.navigateUp()
-
-                    })
-                {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Navigate Back")
-                }
 
             }
 

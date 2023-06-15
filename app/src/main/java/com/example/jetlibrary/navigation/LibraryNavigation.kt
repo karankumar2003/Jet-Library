@@ -10,6 +10,7 @@ import com.example.jetlibrary.screens.login.CreateAccountScreen
 import com.example.jetlibrary.screens.login.LogInScreen
 import com.example.jetlibrary.screens.search.SearchScreen
 import com.example.jetlibrary.screens.splash.SplashScreen
+import com.example.jetlibrary.screens.stats.StatsScreen
 
 @Composable
 fun LibraryNavigation() {
@@ -41,6 +42,10 @@ fun LibraryNavigation() {
         composable(LibraryScreens.CreateAccountScreen.name){
 
             CreateAccountScreen(navController)
+        }
+        composable(LibraryScreens.StatsScreen.name){
+
+            StatsScreen(navController)
         }
 
 
