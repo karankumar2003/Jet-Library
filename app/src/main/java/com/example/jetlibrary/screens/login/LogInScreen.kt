@@ -33,6 +33,8 @@ fun LogInScreen(
     ) {
 
         Text("Jet Library", modifier = Modifier.padding(4.dp), fontSize = 50.sp)
+        Text("Sign In", modifier = Modifier.padding(4.dp), fontSize = 25.sp)
+
         val context = LocalContext.current
         UserForm(
             modifier = Modifier

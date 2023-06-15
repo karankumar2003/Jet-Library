@@ -23,19 +23,6 @@ class MainActivity : ComponentActivity() {
             JetLibraryTheme {
 
 
-                val db = FirebaseFirestore.getInstance()
-                val user: MutableMap<String, Any> = HashMap()
-
-                user["firstName"] = "Karan"
-                user["lastName"] = "Kumar"
-
-                db.collection("users")
-                    .add(user)
-                    .addOnSuccessListener {
-                        Log.d("onCreate", "Success")
-                    }.addOnFailureListener {
-                        Log.d("onCreate", "Failure ")
-                    }
 
 
                 // A surface container using the 'background' color from the theme

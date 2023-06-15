@@ -5,8 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.jetlibrary.model.MUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
@@ -40,21 +42,48 @@ class AuthViewModel : ViewModel() {
             }
         }
 
-    fun createUserWithEmailAndPassword(email: String,password: String,onDone: () -> Unit)
-    = viewModelScope.launch {
-        try {
-            auth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener{task->
-                    if(task.isSuccessful){
-                        Log.d("AuthViewModel", "createUserWithEmailAndPassword: Successfully Created User ")
-                        onDone()
-                    }else{
-                        Log.d("AuthViewModel", "createUserWithEmailAndPassword: Not Successful in Creating User ")
+    fun createUserWithEmailAndPassword(email: String, password: String, onDone: () -> Unit) =
+        viewModelScope.launch {
+            try {
+                auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Log.d(
+                                "AuthViewModel",
+                                "createUserWithEmailAndPassword: Successfully Created User "
+                            )
+                            val displayName = task.result.user?.email?.split("@")?.get(0)
+                            createUser(displayName)
+                            onDone()
+                        } else {
+                            Log.d(
+                                "AuthViewModel",
+                                "createUserWithEmailAndPassword: Not Successful in Creating User "
+                            )
+                        }
                     }
-                }
-        }catch (e:Exception){
-            Log.d("AuthViewModel", "createUserWithEmailAndPassword: ${e.message}")
+            } catch (e: Exception) {
+                Log.d("AuthViewModel", "createUserWithEmailAndPassword: ${e.message}")
+            }
         }
+
+    private fun createUser(displayName: String?) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        val user = MUser(
+            userId = userId.toString(),
+            displayName = displayName.toString(),
+            avatarUrl = "",
+            quote = "",
+            profession = "",
+            id = null
+        ).toMap()
+
+
+
+        FirebaseFirestore.getInstance()
+            .collection("users")
+            .add(user)
+
     }
 
 }

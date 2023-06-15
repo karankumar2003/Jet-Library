@@ -15,24 +15,33 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.jetlibrary.R
 import com.example.jetlibrary.navigation.LibraryScreens
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(navController: NavHostController) {
-    Box(modifier=Modifier.fillMaxSize()){
-        Lottie(modifier=Modifier.size(250.dp).align(Alignment.Center))
+    Box(modifier = Modifier.fillMaxSize()) {
+        Lottie(modifier = Modifier
+            .size(250.dp)
+            .align(Alignment.Center))
     }
 
 
-    LaunchedEffect(key1 = true){
+    LaunchedEffect(key1 = true) {
         delay(2500L)
-        navController.navigate(LibraryScreens.LogInScreen.name)
+
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            navController.navigate(LibraryScreens.HomeScreen.name)
+        } else {
+            navController.navigate(LibraryScreens.LogInScreen.name)
+        }
+
     }
 
 }
 
 @Composable
-fun Lottie(modifier: Modifier=Modifier) {
+fun Lottie(modifier: Modifier = Modifier) {
     val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.splash_lottie))
-    LottieAnimation(composition = composition, iterations = 1,modifier= modifier, speed = 1.5f)
+    LottieAnimation(composition = composition, iterations = 1, modifier = modifier, speed = 1.5f)
 }
