@@ -31,9 +31,17 @@ fun SplashScreen(navController: NavHostController) {
         delay(2500L)
 
         if (FirebaseAuth.getInstance().currentUser != null) {
-            navController.navigate(LibraryScreens.HomeScreen.name)
+            navController.navigate(LibraryScreens.HomeScreen.name){
+                popUpTo(LibraryScreens.SplashScreen.name){
+                    inclusive = true
+                }
+            }
         } else {
-            navController.navigate(LibraryScreens.LogInScreen.name)
+            navController.navigate(LibraryScreens.LogInScreen.name){
+                popUpTo(LibraryScreens.SplashScreen.name){
+                    inclusive = true
+                }
+            }
         }
 
     }
