@@ -23,14 +23,38 @@ class AuthViewModel : ViewModel() {
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            Log.d("AuthViewModel", "signInWithEmailAndPassword: Successfully Logged In ")
+                            Log.d(
+                                "AuthViewModel",
+                                "signInWithEmailAndPassword: Successfully Logged In "
+                            )
                             onDone()
-                        }else{
-                            Log.d("AuthViewModel", "signInWithEmailAndPassword: Not successful in logging in")
+                        } else {
+                            Log.d(
+                                "AuthViewModel",
+                                "signInWithEmailAndPassword: Not successful in logging in"
+                            )
                         }
                     }
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 Log.d("AuthViewModel", "signInWithEmailAndPassword: ${e.message}")
             }
         }
+
+    fun createUserWithEmailAndPassword(email: String,password: String,onDone: () -> Unit)
+    = viewModelScope.launch {
+        try {
+            auth.createUserWithEmailAndPassword(email,password)
+                .addOnCompleteListener{task->
+                    if(task.isSuccessful){
+                        Log.d("AuthViewModel", "createUserWithEmailAndPassword: Successfully Created User ")
+                        onDone()
+                    }else{
+                        Log.d("AuthViewModel", "createUserWithEmailAndPassword: Not Successful in Creating User ")
+                    }
+                }
+        }catch (e:Exception){
+            Log.d("AuthViewModel", "createUserWithEmailAndPassword: ${e.message}")
+        }
+    }
+
 }

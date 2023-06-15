@@ -13,11 +13,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.jetlibrary.components.UserForm
+import com.example.jetlibrary.navigation.LibraryScreens
 
 @Composable
-fun CreateAccountScreen(navController: NavHostController) {
+fun CreateAccountScreen(
+    navController: NavHostController,
+    authViewModel:AuthViewModel = viewModel()
+
+) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -34,7 +40,9 @@ fun CreateAccountScreen(navController: NavHostController) {
                 .fillMaxSize()
                 .padding(16.dp),
             onButtonClick = { email, password ->
-                Toast.makeText(context, "Account Created", Toast.LENGTH_SHORT).show()
+                authViewModel.createUserWithEmailAndPassword(email,password){
+                    navController.navigate(LibraryScreens.HomeScreen.name)
+                }
             },
             buttonText = "Create Account",
             newUserText = "Already have an account? ",
