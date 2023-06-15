@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.jetlibrary.components.LibraryAppBar
 import com.example.jetlibrary.model.MBook
+import com.example.jetlibrary.navigation.LibraryScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +48,9 @@ fun HomeScreen(navController: NavHostController) {
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /*TODO*/ }
+                onClick = {
+                    navController.navigate(LibraryScreens.SearchScreen.name)
+                }
             ) {
                 Icon(Icons.Default.Add, "Add Books")
             }
