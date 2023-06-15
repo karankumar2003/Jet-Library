@@ -13,12 +13,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.jetlibrary.components.UserForm
 import com.example.jetlibrary.navigation.LibraryScreens
 
 @Composable
-fun LogInScreen(navController: NavHostController) {
+fun LogInScreen(
+    navController: NavHostController,
+    authViewModel: AuthViewModel = viewModel()
+    ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -36,7 +40,9 @@ fun LogInScreen(navController: NavHostController) {
                 .padding(16.dp),
             buttonText = "Sign In",
             onButtonClick = { email, password ->
-                Toast.makeText(context, "Signed In", Toast.LENGTH_SHORT).show()
+                authViewModel.signInWithEmailAndPassword(email,password){
+                    navController.navigate(LibraryScreens.HomeScreen.name)
+                }
             },
             newUserText = "Don't have an account? ",
             signUpText = "Sign Up",
