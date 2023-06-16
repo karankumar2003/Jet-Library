@@ -19,7 +19,7 @@ class SearchViewModel @Inject constructor(private val bookRepository: BookReposi
     var books by mutableStateOf<List<Item>>(emptyList())
 
 
-    private fun loadBooks(searchQuery: String) {
+     fun searchBooks(searchQuery: String) {
         viewModelScope.launch {
             if(searchQuery.isNotBlank()){
                 try{
@@ -27,6 +27,7 @@ class SearchViewModel @Inject constructor(private val bookRepository: BookReposi
                     when(response){
                         is Resource.Success ->{
                             books = response.data!!
+                            Log.d("SearchViewModel", "loadBooks: ${books.size} books loaded!")
                         }
                         is Resource.Failure ->{
                             Log.d("SearchViewModel", "loadBooks: Error Loading books")

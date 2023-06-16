@@ -2,10 +2,13 @@ package com.example.jetlibrary.screens.search
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -17,19 +20,20 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.jetlibrary.components.LibraryAppBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(navController: NavHostController) {
+fun SearchScreen(navController: NavHostController,searchViewModel: SearchViewModel = hiltViewModel()) {
     Scaffold(
         topBar = {
             LibraryAppBar(
@@ -46,11 +50,23 @@ fun SearchScreen(navController: NavHostController) {
                 .padding(10.dp)
         ) {
             SearchField(
-                onSearch = {},
+                onSearch = { searchText->
+                           searchViewModel.searchBooks(searchText)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
 
             )
+
+            val bookList = searchViewModel.books
+
+
+            LazyColumn{
+                items(bookList){
+                    BookRow(book = it, modifier = Modifier.fillMaxSize())
+                    Spacer(modifier = Modifier.height(5.dp))
+                }
+            }
         }
 
     }
