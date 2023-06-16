@@ -62,7 +62,7 @@ fun SearchScreen(navController: NavHostController) {
 fun SearchField(
     onSearch: (String) -> Unit,
     modifier: Modifier = Modifier,
-    loader: Boolean = false
+    loading: Boolean = false
 ) {
     val searchState = rememberSaveable {
         mutableStateOf("")
