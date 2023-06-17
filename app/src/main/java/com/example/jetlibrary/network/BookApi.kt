@@ -3,6 +3,7 @@ package com.example.jetlibrary.network
 import com.example.jetlibrary.model.Book
 import com.example.jetlibrary.model.Item
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 import javax.inject.Singleton
 
@@ -13,6 +14,6 @@ interface BookApi {
    suspend fun getAllSearchedBooks(@Query("q") searchQuery: String) : Book
 
     @GET("volumes/{bookId}")
-    suspend fun getBook(@Query("bookId") bookId: String) : Item
+    suspend fun getBook(@Path("bookId") bookId: String) : Item
 
 }

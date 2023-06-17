@@ -39,7 +39,7 @@ fun BookRow(
                 modifier = Modifier.padding(4.dp)
             )
             Text(
-                text = book.volumeInfo.authors[0],
+                text = book.volumeInfo.authors?.get(0).toString(),
                 modifier = Modifier.padding(4.dp),
                 style = MaterialTheme.typography.labelSmall
             )
