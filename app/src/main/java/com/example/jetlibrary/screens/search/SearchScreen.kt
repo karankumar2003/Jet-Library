@@ -58,8 +58,9 @@ fun SearchScreen(navController: NavHostController,searchViewModel: SearchViewMod
 
             )
 
-            val bookList = searchViewModel.books
+            Spacer(modifier = Modifier.height(10.dp))
 
+            val bookList = searchViewModel.books
 
             LazyColumn{
                 items(bookList){
