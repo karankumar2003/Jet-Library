@@ -25,14 +25,26 @@ fun BookRow(
         modifier = modifier
     ) {
         Image(
-            rememberImagePainter(book.volumeInfo.imageLinks.thumbnail),
-            "null", modifier = Modifier.size(100.dp, 130.dp),
+            rememberImagePainter(book.volumeInfo.imageLinks?.thumbnail),
+            "Book Image",
+            modifier = Modifier.size(100.dp, 130.dp),
             contentScale = ContentScale.Crop
         )
+
         Column {
-            Text(text = book.volumeInfo.title, maxLines = 3, overflow = TextOverflow.Visible,modifier=Modifier.padding(4.dp))
-            Text(text = book.volumeInfo.authors.get(0),modifier=Modifier.padding(4.dp),style= MaterialTheme.typography.labelSmall)
+            Text(
+                text = book.volumeInfo.title,
+                maxLines = 3,
+                overflow = TextOverflow.Visible,
+                modifier = Modifier.padding(4.dp)
+            )
+            Text(
+                text = book.volumeInfo.authors[0],
+                modifier = Modifier.padding(4.dp),
+                style = MaterialTheme.typography.labelSmall
+            )
         }
+        Log.d("BookRow", "BookRow: ${book.volumeInfo.imageLinks?.thumbnail} ")
 
     }
 }

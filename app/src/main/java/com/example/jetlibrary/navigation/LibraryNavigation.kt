@@ -1,9 +1,11 @@
 package com.example.jetlibrary.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.jetlibrary.screens.details.DetailsScreen
 import com.example.jetlibrary.screens.home.HomeScreen
 import com.example.jetlibrary.screens.login.CreateAccountScreen
@@ -31,9 +33,11 @@ fun LibraryNavigation() {
 
             LogInScreen(navController)
         }
-        composable(LibraryScreens.DetailScreen.name) {
+        composable(LibraryScreens.DetailScreen.name+"/{bookId}", arguments = listOf(navArgument("bookId"){
+            type = NavType.StringType
+        })) {backStackEntry->
 
-            DetailsScreen(navController)
+            DetailsScreen(navController,backStackEntry.arguments?.getString("bookId"))
         }
         composable(LibraryScreens.SearchScreen.name){
 

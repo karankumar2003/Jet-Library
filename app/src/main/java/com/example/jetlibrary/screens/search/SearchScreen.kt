@@ -18,8 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -30,10 +28,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.jetlibrary.components.LibraryAppBar
+import com.example.jetlibrary.navigation.LibraryScreens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(navController: NavHostController,searchViewModel: SearchViewModel = hiltViewModel()) {
+fun SearchScreen(
+    navController: NavHostController,
+    searchViewModel: SearchViewModel = hiltViewModel()
+) {
     Scaffold(
         topBar = {
             LibraryAppBar(
@@ -50,8 +52,8 @@ fun SearchScreen(navController: NavHostController,searchViewModel: SearchViewMod
                 .padding(10.dp)
         ) {
             SearchField(
-                onSearch = { searchText->
-                           searchViewModel.searchBooks(searchText)
+                onSearch = { searchText ->
+                    searchViewModel.searchBooks(searchText)
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -62,10 +64,12 @@ fun SearchScreen(navController: NavHostController,searchViewModel: SearchViewMod
 
             val bookList = searchViewModel.books
 
-            LazyColumn{
-                items(bookList){
-                    BookRow(book = it, modifier = Modifier.fillMaxSize())
-                    Spacer(modifier = Modifier.height(5.dp))
+            LazyColumn {
+                items(bookList) { book ->
+                    BookRow(book = book, modifier = Modifier.fillMaxSize().clickable {
+                        navController.navigate(LibraryScreens.DetailScreen.name+"/${book.id}")
+                    })
+                    Spacer(modifier = Modifier.height(10.dp))
                 }
             }
         }
@@ -116,7 +120,6 @@ fun SearchField(
                 return@KeyboardActions
             } else {
                 onSearch(searchState.value)
-                searchState.value = ""
                 keyboardController?.hide()
             }
         }
